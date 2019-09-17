@@ -1,12 +1,12 @@
 {
-  "name": "@tslog/core",
+  "name": "@typeservice/core",
   "version": "1.0.0",
-  "description": "A progressive Node.js framework for building efficient, scalable, and enterprise-grade server-side applications on top of TypeScript & JavaScript (ES6, ES7, ES8)",
+  "description": "A lightweight and pure service startup architecture.",
   "main": "dist/index.js",
   "source": "dist",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tslog/core.git"
+    "url": "git+https://github.com/typeservice/core.git"
   },
   "scripts": {
     "dev:process": "ts-node test/process",
@@ -21,9 +21,9 @@
   "author": "cevio",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/tslog/core/issues"
+    "url": "https://github.com/typeservice/core/issues"
   },
-  "homepage": "https://github.com/tslog/core#readme",
+  "homepage": "https://github.com/typeservice/core#readme",
   "devDependencies": {
     "@types/minimist": "^1.2.0",
     "@types/node": "^12.7.4",
