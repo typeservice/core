@@ -3,7 +3,7 @@ import { SETUPTYPES, EventEmitter, Logger } from '../shared';
 import { Messager } from '../messager';
 
 class WorkerFactory extends EventEmitter {
-  private readonly logger: Logger;
+  public readonly logger: Logger;
   public readonly messager = new Messager(SETUPTYPES.WORKER);
   public readonly listen = SafeProcssWrap(this);
 

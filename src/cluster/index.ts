@@ -12,7 +12,7 @@ type ClusterWorkerForkerOptions = {
 }
 
 class ClusterFactory extends EventEmitter {
-  private readonly logger: Logger;
+  public readonly logger: Logger;
   public readonly messager = new Messager(SETUPTYPES.MASTER);
   public readonly listen = SafeProcssWrap(this);
 
