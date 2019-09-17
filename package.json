@@ -1,0 +1,39 @@
+{
+  "name": "@tslog/core",
+  "version": "1.0.0",
+  "description": "A progressive Node.js framework for building efficient, scalable, and enterprise-grade server-side applications on top of TypeScript & JavaScript (ES6, ES7, ES8)",
+  "main": "dist/index.js",
+  "source": "dist",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tslog/core.git"
+  },
+  "scripts": {
+    "dev:process": "ts-node test/process",
+    "dev:singleton": "ts-node test/singleton/index",
+    "dev:cluster": "ts-node test/cluster/index",
+    "build": "rm -rf dist/ && tsc -d"
+  },
+  "keywords": [
+    "template",
+    "nelts"
+  ],
+  "author": "cevio",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tslog/core/issues"
+  },
+  "homepage": "https://github.com/tslog/core#readme",
+  "devDependencies": {
+    "@types/minimist": "^1.2.0",
+    "@types/node": "^12.7.4",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.6.2"
+  },
+  "dependencies": {
+    "@types/uuid": "^3.4.5",
+    "minimist": "^1.2.0",
+    "reflect-metadata": "^0.1.13",
+    "uuid": "^3.3.3"
+  }
+}
