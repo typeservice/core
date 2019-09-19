@@ -11,3 +11,5 @@ npm-debug.log
 .vscode
 tsconfig.tsbuildinfo
 dist
+.nyc_output
+coverage.lcov

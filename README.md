@@ -1,6 +1,12 @@
-<center><img src="https://github.com/typeservice/core/raw/master/logo/256.png" /></center>
+<div align="center">
+  <a href="https://github.com/typeservice/core">
+    <img width="200" heigth="200" src="https://github.com/typeservice/core/raw/master/logo/256.png">
+  </a>
+</div>
 
 # @typeservice/core
+
+[![codecov](https://codecov.io/gh/typeservice/core/branch/master/graph/badge.svg)](https://codecov.io/gh/typeservice/core)
 
 A lightweight and pure service startup architecture. It provides the most direct access mode through a stable process lifecycle model. You can use it to build a variety of service frameworks.
 

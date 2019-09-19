@@ -1,6 +1,6 @@
 {
   "name": "@typeservice/core",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A lightweight and pure service startup architecture.",
   "main": "dist/index.js",
   "source": "dist",
@@ -13,7 +13,9 @@
     "dev:singleton": "ts-node test/singleton/index",
     "dev:cluster": "ts-node test/cluster/index",
     "build": "rm -rf dist/ && tsc -d",
-    "test": "jest --runInBand --detectOpenHandles"
+    "test": "jest --runInBand --detectOpenHandles",
+    "test:coverage": "rm -rf coverage/ && nyc jest --detectOpenHandles --runInBand --forceExit --coverage",
+    "test:report": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
   },
   "files": [
     "dist"
@@ -38,7 +40,9 @@
     "@types/minimist": "^1.2.0",
     "@types/node": "^12.7.4",
     "axios": "^0.19.0",
+    "codecov": "^3.5.0",
     "jest": "^24.9.0",
+    "nyc": "^14.1.1",
     "ts-jest": "^24.1.0",
     "ts-node": "^8.3.0",
     "typescript": "^3.6.2"
