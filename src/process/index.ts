@@ -1,3 +1,4 @@
+import * as Timer from '../timer';
 import { ProcessException, EventEmitter, Logger } from '../shared';
 
 export type SafeProcssWrapSetupCallback = (callback?: (e: Error) => Promise<any>) => Promise<any>;
@@ -41,6 +42,7 @@ export function SafeProcssWrap<T extends EventEmitter>(script: T, timeout?: numb
      * Invoke exit lifecycle
      * then make `done` is true to exit this process.
      */
+    Timer.destroy();
     Promise.resolve(script.sync('exit'))
       .catch(e => script.sync('error', e, 'EEXIT'))
       .then(() => done = true);

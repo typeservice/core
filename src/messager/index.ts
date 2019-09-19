@@ -4,6 +4,7 @@ import * as path from 'path';
 import * as uuid from 'uuid';
 import * as cluster from 'cluster';
 import * as childProcess from 'child_process';
+import * as Timer from '../timer';
 import { Noder } from './node';
 import { SETUPTYPES, IPCException, resolve as PathResolve } from '../shared';
 
@@ -77,6 +78,14 @@ class Messager {
     return this.weight === 10 || this.weight === 30;
   }
 
+  get nodes() {
+    return this._noders.size;
+  }
+
+  get channels() {
+    return this._mapper.size;
+  }
+
   method(name: string, fn: MessageHandlerType) {
     this._handlers.set(name, fn);
   }
@@ -97,8 +106,9 @@ class Messager {
     return await new Promise((resolve, reject) => {
       const hash = uuid.v4();
       const args = process.argv.slice(2);
+      file = PathResolve(file);
       args.push(
-        '--Agent.Script=' + PathResolve(file), 
+        '--Agent.Script=' + file, 
         '--Agent.Arguments=' + JSON.stringify(paramaters || []), 
         '--Agent.Token=' + hash
       );
@@ -107,12 +117,16 @@ class Messager {
         if (err) return reject(new IPCException(err, 502));
         resolve();
       });
-      const agent = childProcess.fork(runtime, args, {
+      const argvs: childProcess.ForkOptions = {
         cwd: process.cwd(),
         env: Object.create(process.env),
         stdio: 'inherit',
         execArgv: process.execArgv.slice(0),
-      });
+      }
+      if (file.endsWith('.ts')) {
+        argvs.execPath = path.resolve(process.cwd(), './node_modules/.bin/ts-node');
+      }
+      const agent = childProcess.fork(runtime, args, argvs);
       const node = new Noder(agent, SETUPTYPES.AGENT);
       this.register(node, name);
     });
@@ -124,13 +138,10 @@ class Messager {
    */
   public async destroy(name: string) {
     if (!this.isMessageMaster) return await this.invoke('master', '-', { name });
-    return await new Promise((resolve, reject) => {
-      if (!this._mapper.has(name)) return reject(new IPCException('cannot find the agent name of ' + name, 404));
+    return await new Promise(resolve => {
+      if (!this._mapper.has(name)) return resolve();
       const node = this._mapper.get(name);
-      node.destroy(() => {
-        this.unregister(node.pid);
-        resolve();
-      });
+      node.destroy(resolve);
       process.kill(node.pid, 'SIGTERM');
     });
   }
@@ -140,7 +151,7 @@ class Messager {
     this._noders.set(node.pid, node);
     if (alias) this._mapper.set(alias, node);
     node.onMessage(this._onMessage.bind(this));
-    node.onClose(() => this.unregister(node.pid));
+    node.onClose(() => this.unregister(alias || node.pid));
   }
 
   public unregister(pid: number | string) {
@@ -153,6 +164,8 @@ class Messager {
         pid = node.pid;
         this._mapper.delete(_pid);
       }
+    } else {
+      
     }
     if (pid) {
       if (this._noders.has(pid)) this._noders.delete(pid);
@@ -300,12 +313,12 @@ class Messager {
       }
     }));
     return await new Promise<T>((resolve, reject) => {
-      const timer = setTimeout(() => {
+      const timer = Timer.startTimeout(() => {
         this._callbacks.delete(id);
         throw new IPCException(`invoke method<${method}> from ${to} timeout`, 408);
-      }, timeout || 20000).unref();
+      }, timeout || 20000);
       this._callbacks.set(id, (error, data) => {
-        clearTimeout(timer);
+        Timer.stopTimeout(timer);
         this._callbacks.delete(id);
         if (error) return reject(error);
         resolve(data);

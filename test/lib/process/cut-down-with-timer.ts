@@ -1,9 +1,7 @@
-import { ProcessException, SafeProcssWrap, EventEmitter } from '../src';
-class CustomService extends EventEmitter {
-  private readonly _timer: NodeJS.Timer = setInterval(() => {
-    console.log('interval...')
-  }, 1000);
+import { ProcessException, SafeProcssWrap, EventEmitter } from '../../../src';
+export default class CustomService extends EventEmitter {
   public readonly listen = SafeProcssWrap(this);
+  private readonly timer = setInterval(() => {}, 100);
 
   constructor() {
     super();
@@ -17,13 +15,18 @@ class CustomService extends EventEmitter {
   }
 
   async exit() {
-    console.log('exiting...')
-    clearInterval(this._timer);
-    await new Promise(resolve => setTimeout(resolve, 5000));
+    clearInterval(this.timer);
+    process.send({
+      key: 'exit',
+      value: 2
+    })
   }
 
   async setup() {
-    console.info('setup');
+    process.send({
+      key: 'setup',
+      value: 1
+    })
   }
 }
 

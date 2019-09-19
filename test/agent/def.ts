@@ -15,6 +15,7 @@ export default class ABCAgent extends AgentFactory {
     await next();
   })
   async test(ctx: AgentContext) {
-    return this.b + ':' + (this.a + ctx.data);
+    const value = await this.messager.invoke('abc', 'test', ctx.data);
+    return this.b + ':' + value + ':' + this.a;
   }
 }

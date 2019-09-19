@@ -1,4 +1,5 @@
 import * as ipc from './agent/decorates/common';
+import * as Timer from './timer';
 
 export * from './shared';
 export * from './process';
@@ -11,4 +12,5 @@ export * from './agent/context';
 
 export {
   ipc,
+  Timer,
 }

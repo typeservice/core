@@ -14,7 +14,6 @@ export default class CustomService extends EventEmitter {
   }
 
   async exit() {
-    await new Promise(resolve => setTimeout(resolve, 5000));
     process.send({
       key: 'exit',
       value: 2

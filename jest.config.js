@@ -1,6 +1,7 @@
 module.exports = {
+  "verbose": true,
   "roots": [
-    "__test__"
+    "test"
   ],
   "transform": {
     "^.+\\.tsx?$": "ts-jest"

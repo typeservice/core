@@ -1,6 +1,6 @@
 {
   "name": "@typeservice/core",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A lightweight and pure service startup architecture.",
   "main": "dist/index.js",
   "source": "dist",
@@ -13,7 +13,7 @@
     "dev:singleton": "ts-node test/singleton/index",
     "dev:cluster": "ts-node test/cluster/index",
     "build": "rm -rf dist/ && tsc -d",
-    "test": "jest --verbose --runInBand"
+    "test": "jest --runInBand --detectOpenHandles"
   },
   "files": [
     "dist"
@@ -23,7 +23,9 @@
     "worker",
     "agent",
     "messager",
-    "cluster"
+    "cluster",
+    "micro",
+    "service"
   ],
   "author": "cevio",
   "license": "MIT",
@@ -35,6 +37,7 @@
     "@types/jest": "^24.0.18",
     "@types/minimist": "^1.2.0",
     "@types/node": "^12.7.4",
+    "axios": "^0.19.0",
     "jest": "^24.9.0",
     "ts-jest": "^24.1.0",
     "ts-node": "^8.3.0",

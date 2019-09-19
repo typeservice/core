@@ -1,6 +1,6 @@
-# @typeservice/core
+<center><img src="https://github.com/typeservice/core/raw/master/logo/256.png" /></center>
 
-![logo](https://github.com/typeservice/core/raw/master/logo/256.png)
+# @typeservice/core
 
 A lightweight and pure service startup architecture. It provides the most direct access mode through a stable process lifecycle model. You can use it to build a variety of service frameworks.
 
