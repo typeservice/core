@@ -12,11 +12,15 @@
     "dev:process": "ts-node test/process",
     "dev:singleton": "ts-node test/singleton/index",
     "dev:cluster": "ts-node test/cluster/index",
-    "build": "rm -rf dist/ && tsc -d"
+    "build": "rm -rf dist/ && tsc -d",
+    "test": "jest --verbose --runInBand"
   },
   "keywords": [
-    "template",
-    "nelts"
+    "typeservice",
+    "worker",
+    "agent",
+    "messager",
+    "cluster"
   ],
   "author": "cevio",
   "license": "MIT",
@@ -25,8 +29,11 @@
   },
   "homepage": "https://github.com/typeservice/core#readme",
   "devDependencies": {
+    "@types/jest": "^24.0.18",
     "@types/minimist": "^1.2.0",
     "@types/node": "^12.7.4",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.1.0",
     "ts-node": "^8.3.0",
     "typescript": "^3.6.2"
   },
