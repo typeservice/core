@@ -15,6 +15,9 @@
     "build": "rm -rf dist/ && tsc -d",
     "test": "jest --verbose --runInBand"
   },
+  "files": [
+    "dist"
+  ],
   "keywords": [
     "typeservice",
     "worker",
