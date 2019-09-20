@@ -1,5 +1,6 @@
 import * as path from 'path';
 import ProcessWatcher from './lib/process/watcher';
+import { EventEmitter, SafeProcssWrap } from '../src';
 
 function doneSure(done: Function, timeout?: number) {
   return () => setTimeout(done, timeout || 300);
@@ -50,4 +51,26 @@ describe('Test the lifecycle function of the underlying process', () => {
       }
     }, doneSure(done));
   })
+
+  test('Process setup error event', done => {
+    const file = path.resolve(__dirname, './lib/process/setup-error.ts');
+    ProcessWatcher(file, ls => {
+      return {
+        exiterror(value) {
+          expect(value).toBe('setup error');
+        }
+      }
+    }, doneSure(done));
+  })
+
+  test('Process exit timeout', done => {
+    const file = path.resolve(__dirname, './lib/process/timeout.ts');
+    ProcessWatcher(file, ls => {
+      return {
+        timeout(value) {
+          expect(value).toBe('Process on exit timeout:3000');
+        }
+      }
+    }, doneSure(done));
+  }, 10000)
 });

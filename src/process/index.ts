@@ -4,6 +4,7 @@ import { ProcessException, EventEmitter, Logger } from '../shared';
 export type SafeProcssWrapSetupCallback = (callback?: (e: Error) => Promise<any>) => Promise<any>;
 
 export function SafeProcssWrap<T extends EventEmitter>(script: T, timeout?: number): SafeProcssWrapSetupCallback {
+  timeout = timeout || Number(process.env.EXIT_TIMEOUT || 3000);
   let closing = false;
   process.on('unhandledRejection', DealWithError('unhandledRejection'));
   process.on('uncaughtException', DealWithError('uncaughtException'));
@@ -42,13 +43,12 @@ export function SafeProcssWrap<T extends EventEmitter>(script: T, timeout?: numb
      * Invoke exit lifecycle
      * then make `done` is true to exit this process.
      */
-    Timer.destroy();
     Promise.resolve(script.sync('exit'))
       .catch(e => script.sync('error', e, 'EEXIT'))
       .then(() => done = true);
   
     const timer = setInterval(() => {
-      if (Date.now() - start > timeout || done) {
+      if ((Date.now() - start > timeout) || done) {
         clearInterval(timer);
         if (!done) {
           // if not done , 
@@ -56,6 +56,7 @@ export function SafeProcssWrap<T extends EventEmitter>(script: T, timeout?: numb
           const err = new ProcessException('Process on exit timeout:' + timeout, 'EEXIT_TIMEOUT');
           script.sync('error', err, err.code);
         }
+        Timer.destroy();
         process.exit(0);
       }
     }, 10);

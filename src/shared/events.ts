@@ -34,7 +34,7 @@ export class EventEmitter {
     return this;
   }
 
-  removeListener(name: string, listener?: EventEmitterStackHandler) {
+  removeListener(name: string, listener: EventEmitterStackHandler) {
     const listeners = this.listeners(name);
     if (listeners.has(listener)) {
       listeners.delete(listener);

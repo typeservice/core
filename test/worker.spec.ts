@@ -3,7 +3,7 @@ import axios from 'axios';
 import Frameworker from './lib/worker/frameworker';
 
 describe('Test the function of the worker process', () => {
-  test('<MASTER> Create a frameworker', done => {
+  test('Create a frameworker', done => {
     const frameworker = new Frameworker();
     frameworker.listen()
       .then(() => axios.get('http://127.0.0.1:8080'))
@@ -16,7 +16,7 @@ describe('Test the function of the worker process', () => {
       });
   });
 
-  test('<MASTER> Create a frameworker with an agent', done => {
+  test('Create a frameworker with an agent', done => {
     const frameworker = new Frameworker();
     frameworker.listen()
       .then(() => frameworker.messager.create('abc', path.resolve(__dirname, './agent/abc'), 678, 'evio'))
@@ -32,7 +32,7 @@ describe('Test the function of the worker process', () => {
       .then(done);
   });
 
-  test('<MASTER> Create a frameworker with muilt agents', done => {
+  test('Create a frameworker with muilt agents', done => {
     const frameworker = new Frameworker();
     frameworker.listen()
       .then(() => Promise.all([

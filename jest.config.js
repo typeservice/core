@@ -7,7 +7,8 @@ module.exports = {
     "^.+\\.tsx?$": "ts-jest"
   },
   "collectCoverageFrom": [
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "!src/cluster/**/*.ts"
   ],
   "coverageDirectory": "coverage",
   "coverageReporters": [

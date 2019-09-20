@@ -1,8 +1,8 @@
-export type ComposeNextCallback = () => Promise<any>;
+export type ComposeNextCallback = (...args: any[]) => Promise<any>;
 export type ComposeMiddleware<T = any> = (ctx: T, next: ComposeNextCallback) => any;
 export type ComposedMiddleware<T = any> = (ctx: T, next?: ComposeNextCallback) => Promise<void>;
 
-export function Compose<T = any>(middleware: ComposeMiddleware<T>[]): ComposedMiddleware<T> {
+export function Compose<T = any>(middleware?: ComposeMiddleware<T>[]): ComposedMiddleware<T> {
   if (!Array.isArray(middleware)) throw new TypeError('Middleware stack must be an array!')
   for (const fn of middleware) {
     if (typeof fn !== 'function') throw new TypeError('Middleware must be composed of functions!')

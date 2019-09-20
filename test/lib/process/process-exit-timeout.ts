@@ -1,5 +1,5 @@
 import { ProcessException, SafeProcssWrap, EventEmitter } from '../../../src';
-export default class CustomService extends EventEmitter {
+class CustomService extends EventEmitter {
   public readonly listen = SafeProcssWrap(this, 1000);
 
   constructor() {

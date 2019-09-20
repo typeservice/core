@@ -4,15 +4,7 @@ class CustomService extends EventEmitter {
 
   constructor() {
     super();
-    this.on('error', this.error.bind(this));
     this.on('setup', this.setup.bind(this));
-  }
-  
-  error(e: ProcessException, name?: string){
-    process.send({
-      key: 'error',
-      value: name + ':' + e.message
-    })
   }
 
   async setup() {
@@ -20,5 +12,10 @@ class CustomService extends EventEmitter {
   }
 }
 
-const pro = new CustomService();
-pro.listen();
+const frameworker = new CustomService();
+frameworker.listen(async (e) => {
+  process.send({
+    key: 'exiterror',
+    value: e.message
+  })
+});
